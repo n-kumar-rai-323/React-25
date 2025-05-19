@@ -1,77 +1,159 @@
+import { NavLink } from "react-router";
 import logo1 from "../../../assets/images/logo1.png";
 import Welcome from "../../../components/ui/card/welcome";
+import { InputLabel, InputType, PasswordInput, TextInput } from "../../../components/form/input.component";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup";
+export interface ICredentials{
+  email:string,
+  password:string
+}
+
+
+const LoginDTO= Yup.object({
+  email:Yup.string().email().required(),
+  password: Yup.string().required()
+})
+
 
 const LoginPage = () => {
+  const {control, handleSubmit, formState:{errors}}=useForm({
+    defaultValues:{
+      email:"",
+      password:""
+    } as ICredentials,
+    resolver:yupResolver(LoginDTO)
+  });
+  const  submitEvent= (data: ICredentials)=>{
+console.log(data)
+  }
+  console.log(errors)
+ 
   return (
-    // <div >
-    //   {/* /* global css */ }
-    //   <h1 className="title">Global CSS</h1>
-    //   {/* modular css   */}
-    //   <h1 className={style.title}>Module CSS</h1>
-    // </div>
+
     <>
       <div className="flex h-screen w-full">
         <div className="w-1/3 bg-black rounded-l-lg  hidden lg:block">
           <div className="flex flex-col gap-5 w-full h-screen text-center justify-center items-center">
             <img src={logo1} className="w-40 rounded-full" />
-            <h1 className="text-yellow-2000 ">Welcome to home</h1>
-            <div className="text-yellow-2000">
-            <Welcome></Welcome>
+            <h1 className="text-yellow-200 ">Welcome to home</h1>
+            <div className="text-yellow-200">
+              <Welcome></Welcome>
             </div>
           </div>
         </div>
-        <div className="w-full lg:w-2/3  ">
-          <div className="flex max-w-7xl mx-auto flex-col  gap-5 items-center mt-20 lg:mt-40">
-            <div className="lg:hidden">
+        <div className="w-full lg:w-2/3 h-screen flex flex-col bg-white">
+          <div className="flex mx-10 lg:mx-40 flex-col gap-5 lg:mt-40">
+            <div className="lg:hidden flex w-full justify-center">
               <img src={logo1} className="w-40 rounded-full" />
             </div>
             <div className="flex flex-col gap-5">
               <h1 className="text-teal-950 text-2xl font-semibold"> Sign In</h1>
-              <form action="">
-                <p className="text-xl font-semibold text animate-pulse">Form Comming Soon...</p>
-                </form>
-              <a
-                href="/register"
-                className="text-teal-700 hover:cursor-pointer underline italic hover:text-teal-950"
-              >
-                Register
-              </a>
+
+              <form onSubmit={handleSubmit(submitEvent)} className="flex  flex-col gap-5">
+                <div className="flex ">
+                  <div className="w-1/4">
+                <InputLabel htmlFor="email" label="Username(email)"/>
+                  </div>
+
+                  <div className="w-3/4">
+                    <TextInput errorMsg={errors?.email?.message} control={control} name="email" placeholder="Enter your email...." type={InputType.EMAIL} size="large"/>
+                  </div>
+                </div>
+                <div className="flex ">
+                  <div className="w-1/4">
+                    <label htmlFor="pasword">Password:</label>
+                  </div>
+
+                  <div className="w-3/4">
+                 <PasswordInput  errorMsg={errors?.password?.message}control={control} name="password" size="large" placeholder="Enter your password"/>
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <NavLink
+                    to="/forget-password"
+                    className="text-teal-800 hover:cursor-pointer hover:text-teal-700 hover:underline"
+                  >
+                    Forget pasword
+                  </NavLink>
+                </div>
+
+                <div className="flex ">
+                  <div className="w-1/4"></div>
+
+                  <div className="w-3/4 flex gap-5">
+                    <button
+                      type="reset"
+                      className="bg-red-800 w-40 p-2 text-white rounded-md transition hover:cursor-pointer hover:scale-95 hover:bg-red-900"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="bg-green-800 w-40 p-2 text-white rounded-md transition hover:cursor-pointer hover:scale-95 hover:bg-green-900"
+                    >
+                      Login
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              
             </div>
           </div>
-        <footer className="flex fixed bottom-0 h-10 w-full bg-stone-600 items-center justify-left px-10 rounded-r-lg  ">
-          <ul className="flex gap-6">
-            <li>
-              <a href="/about" className="text-yellow-200 transition hover:text-stone-50/75">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="/careers" className="text-yellow-200 transition hover:text-stone-50/75">
-                Careers
-              </a>
-            </li>
-            <li>
-              <a href="/history" className="text-yellow-200 transition hover:text-stone-50/75">
-                History
-              </a>
-            </li>
-            <li>
-              <a href="/services" className="text-yellow-200  transition hover:text-stone-50/75">
-                Services
-              </a>
-            </li>
-            <li>
-              <a href="/projects" className="text-yellow-200  transition hover:text-stone-50/75">
-                Projects
-              </a>
-            </li>
-            <li>
-              <a href="/blog" className="text-yellow-200  transition hover:text-stone-50/75">
-                Blog
-              </a>
-            </li>
-          </ul>
-        </footer>
+          <footer className="flex fixed bottom-0 h-10 w-full bg-stone-600 items-center justify-left px-10 rounded-r-lg  ">
+            <ul className="flex gap-6">
+              <li>
+                <a
+                  href="/about"
+                  className="text-yellow-200 transition hover:text-stone-50/75"
+                >
+                  About
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/careers"
+                  className="text-yellow-200 transition hover:text-stone-50/75"
+                >
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/history"
+                  className="text-yellow-200 transition hover:text-stone-50/75"
+                >
+                  History
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/services"
+                  className="text-yellow-200  transition hover:text-stone-50/75"
+                >
+                  Services
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/projects"
+                  className="text-yellow-200  transition hover:text-stone-50/75"
+                >
+                  Projects
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/blog"
+                  className="text-yellow-200  transition hover:text-stone-50/75"
+                >
+                  Blog
+                </a>
+              </li>
+            </ul>
+          </footer>
         </div>
       </div>
     </>

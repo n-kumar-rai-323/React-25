@@ -29,6 +29,9 @@ const routerConfig = createBrowserRouter([
         },{
             path:"banner/",
             element:<>Banner components</>
+        },{
+            path:"banner/:id",
+            element:<>Banner components</>
         }
     ]
   },
