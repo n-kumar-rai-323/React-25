@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import counterSlice from "./slices/counter";
 import todoReducer from "./slices/todo";
 export const store = configureStore({
-  reducer: {
-    counter: counterSlice,
-    todos: todoReducer,
-  },
+  // reducer: {
+  //   counter: counterSlice,
+  //   todos: todoReducer,
+    
+  // },
+  reducer:todoReducer
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

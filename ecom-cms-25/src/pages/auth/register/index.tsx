@@ -1,13 +1,13 @@
 import React from 'react'
 import Welcome from '../../../components/ui/card/welcome'
-import logo1 from "../../../assets/images/logo1.png"
+import logo from "../../../assets/images/logo.jpg"
 const RegisterPage = () => {
   return (
     <>
     <div className="flex h-screen w-full">
         <div className="w-1/3 bg-black rounded-l-lg  hidden lg:block">
           <div className="flex flex-col gap-5 w-full h-screen text-center justify-center items-center">
-            <img src={logo1} className="w-40 rounded-full" />
+            <img src={logo} className="w-40 rounded-full" />
             <h1 className="text-amber-500 ">Welcome to home</h1>
             <div className="text-amber-500">
             <Welcome></Welcome>
@@ -17,7 +17,7 @@ const RegisterPage = () => {
         <div className="w-full lg:w-2/3  ">
           <div className="flex max-w-7xl mx-auto flex-col  gap-5 items-center mt-20 lg:mt-40">
             <div className="lg:hidden">
-              <img src={logo1} className="w-40 rounded-full" />
+              <img src={logo} className="w-40 rounded-full" />
             </div>
             <div className="flex flex-col gap-5">
               <h1 className="text-teal-950 text-2xl font-semibold"> Register</h1>

@@ -5,11 +5,13 @@ import { store } from "./redux/store";
 
 import "./assets/css/global.css";
 import RouterConfig from "./config/router.config";
+import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
      <RouterConfig></RouterConfig>
+     {/* <App/> */}
     </Provider>
   </StrictMode>
 );

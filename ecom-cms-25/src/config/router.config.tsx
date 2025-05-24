@@ -10,6 +10,9 @@ import RegisterPage from "../pages/auth/register";
 import NotFound from "../components/ui/card/Not found/not-foundcomponent";
 import NotFoundPage from "../pages/errors/not-found.page";
 import Admindashbord from "../pages/dashboard/admin-dashbord.page";
+import NewTodo from "../redux/slices/todo/newTodo";
+import App from "../App";
+import { ToastContainer } from "react-toastify";
 const routerConfig = createBrowserRouter([
   {
     path: "/",
@@ -18,6 +21,10 @@ const routerConfig = createBrowserRouter([
   {
     path: "/register",
     Component: RegisterPage,
+  },
+  {
+    path:"/todo",
+    element:<App/>
   },
   {
     path: "/admin",
@@ -50,7 +57,7 @@ const RouterConfig = () => {
           <Route path="/register" element={<RegisterPage/>}></Route>
         </Routes>
       </BrowserRouter> */}
-
+<ToastContainer theme="colored"/>
       <RouterProvider router={routerConfig}></RouterProvider>
     </>
   );

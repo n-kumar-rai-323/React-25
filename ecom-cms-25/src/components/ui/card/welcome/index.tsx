@@ -5,10 +5,7 @@ import style from "./index.module.css";
 
 
 const Welcome =()=>{
-  const [data , setData] = useState<String>(` Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-              vero ipsam veniam enim pariatur eos, quaerat, voluptas voluptate
-              itaque quod molestiae soluta neque? Vel libero assumenda
-              voluptates sint, nam error.`)
+  const [data , setData] = useState<String>(` Your local platform for blood donation in Bharatpur, Bagmati Province. Connect, request, and donate easily.`)
   const [loading, setLoading] =useState<Boolean>(true)
 
   useEffect(()=>{

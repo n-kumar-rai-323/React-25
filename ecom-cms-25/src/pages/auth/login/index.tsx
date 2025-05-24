@@ -1,43 +1,63 @@
-import { NavLink } from "react-router";
-import logo1 from "../../../assets/images/logo1.png";
+import { NavLink, useNavigate } from "react-router";
+import logo1 from "../../../assets/images/logo1.jpg";
 import Welcome from "../../../components/ui/card/welcome";
-import { InputLabel, InputType, PasswordInput, TextInput } from "../../../components/form/input.component";
+import {
+  InputLabel,
+  InputType,
+  PasswordInput,
+  TextInput,
+} from "../../../components/form/input.component";
 import { useForm } from "react-hook-form";
-import * as Yup from "yup"
+import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-export interface ICredentials{
-  email:string,
-  password:string
-}
+import axiosInstance from "../../../config/axios.config";
+import { ICredentials } from "../auth.contract";
+import authSvc from "../../../services/auth.service";
+import { toast } from "react-toastify";
 
-
-const LoginDTO= Yup.object({
-  email:Yup.string().email().required(),
-  password: Yup.string().required()
-})
-
+const LoginDTO = Yup.object({
+  email: Yup.string().email().required(),
+  password: Yup.string().required(),
+});
 
 const LoginPage = () => {
-  const {control, handleSubmit, formState:{errors}}=useForm({
-    defaultValues:{
-      email:"",
-      password:""
+  const navigate = useNavigate();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
     } as ICredentials,
-    resolver:yupResolver(LoginDTO)
+    resolver: yupResolver(LoginDTO),
   });
-  const  submitEvent= (data: ICredentials)=>{
-console.log(data)
-  }
-  console.log(errors)
- 
-  return (
+  const submitEvent = async (data: ICredentials) => {
+    try {
+      // // const response = await axiosInstance.post("", data, {
+      // //   headers: {},
+      // //   params: {},
+      // const response = await authSvc.login(data)
+      const response = await authSvc.login(data);
+         toast.success(`Welcome to ${response.email} panel!!`);
+      // Corrected navigation path:
+      navigate(`/admin/`);
+      // toast.success(`Welcome to panel!!`);
+      // navigate(`/admin`); // Change this line
+    } catch (exception) {
+      toast.error(exception.response.message)
+      // console.error(exception);
+    }
+  };
 
+  return (
     <>
       <div className="flex h-screen w-full">
         <div className="w-1/3 bg-black rounded-l-lg  hidden lg:block">
           <div className="flex flex-col gap-5 w-full h-screen text-center justify-center items-center">
             <img src={logo1} className="w-40 rounded-full" />
-            <h1 className="text-yellow-200 ">Welcome to home</h1>
+            <h1 className="text-yellow-200 ">World Blood Donor </h1>
             <div className="text-yellow-200">
               <Welcome></Welcome>
             </div>
@@ -51,14 +71,24 @@ console.log(data)
             <div className="flex flex-col gap-5">
               <h1 className="text-teal-950 text-2xl font-semibold"> Sign In</h1>
 
-              <form onSubmit={handleSubmit(submitEvent)} className="flex  flex-col gap-5">
+              <form
+                onSubmit={handleSubmit(submitEvent)}
+                className="flex  flex-col gap-5"
+              >
                 <div className="flex ">
                   <div className="w-1/4">
-                <InputLabel htmlFor="email" label="Username(email)"/>
+                    <InputLabel htmlFor="email" label="Username(email)" />
                   </div>
 
                   <div className="w-3/4">
-                    <TextInput errorMsg={errors?.email?.message} control={control} name="email" placeholder="Enter your email...." type={InputType.EMAIL} size="large"/>
+                    <TextInput
+                      errorMsg={errors?.email?.message}
+                      control={control}
+                      name="email"
+                      placeholder="Enter your email...."
+                      type={InputType.EMAIL}
+                      size="large"
+                    />
                   </div>
                 </div>
                 <div className="flex ">
@@ -67,7 +97,13 @@ console.log(data)
                   </div>
 
                   <div className="w-3/4">
-                 <PasswordInput  errorMsg={errors?.password?.message}control={control} name="password" size="large" placeholder="Enter your password"/>
+                    <PasswordInput
+                      errorMsg={errors?.password?.message}
+                      control={control}
+                      name="password"
+                      size="large"
+                      placeholder="Enter your password"
+                    />
                   </div>
                 </div>
                 <div className="flex justify-end">
@@ -98,8 +134,6 @@ console.log(data)
                   </div>
                 </div>
               </form>
-
-              
             </div>
           </div>
           <footer className="flex fixed bottom-0 h-10 w-full bg-stone-600 items-center justify-left px-10 rounded-r-lg  ">
